@@ -1,6 +1,6 @@
 ﻿using System;
 using UnityEngine;
-
+/*
 namespace MarchingCubes.EField
 {
     /// <summary>
@@ -55,3 +55,4 @@ namespace MarchingCubes.EField
 
 }
 
+*/

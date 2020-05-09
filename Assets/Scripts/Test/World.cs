@@ -7,10 +7,11 @@ namespace MarchingCubes
     public abstract class World : MonoBehaviour
     {
         /// <summary>
-        /// The chunk's size. This represents the width, height and depth in Unity units.
+        /// The chunk's size. This represents the width, height and depth in chunk units.
         /// </summary>
-        [SerializeField] private int chunkSize = 16;
+        [SerializeField] private int chunkDim = 16;
 
+        [SerializeField] private float chunkUnitSize =0.2f;
         /// <summary>
         /// The chunk's prefab that will be instantiated
         /// </summary>
@@ -23,10 +24,11 @@ namespace MarchingCubes
         [SerializeField] private float isolevel;
 
         /// <summary>
-        /// The chunk's size. This represents the width, height and depth in Unity units.
+        /// The chunk's size. This represents the width, height and depth in Chunk units.
         /// </summary>
-        public int ChunkSize => chunkSize;
+        public int ChunkDim => chunkDim;
 
+        public float ChunkUnitSize => chunkUnitSize;
         /// <summary>
         /// The chunk's prefab that will be instantiated
         /// </summary>
@@ -41,11 +43,11 @@ namespace MarchingCubes
         /// <summary>
         /// All the chunks of this world
         /// </summary>
-        public Dictionary<int3, Chunk> Chunks { get; set; }
+        public Dictionary<float3, Chunk> Chunks { get; set; }
 
         protected virtual void Start()
         {
-            Chunks = new Dictionary<int3, Chunk>();
+            Chunks = new Dictionary<float3, Chunk>();
         }
         
         /// <summary>
@@ -69,7 +71,7 @@ namespace MarchingCubes
         {
             if (TryGetChunk(worldPosition, out Chunk chunk))
             {
-                return chunk.GetDensity(worldPosition.Mod(ChunkSize));
+                return chunk.GetDensity(worldPosition.Mod(chunkDim));
             }
 
             return 0;
@@ -82,15 +84,15 @@ namespace MarchingCubes
         /// <param name="worldPosition">The density's world position</param>
         public void SetDensity(float density, int3 worldPosition)
         {
-            List<int3> modifiedChunkPositions = new List<int3>();
+            List<float3> modifiedChunkPositions = new List<float3>();
             for (int i = 0; i < 8; i++)
             {
-                int3 chunkPos = chunkSize * WorldPositionToCoordinate(worldPosition - LookupTables.CubeCorners[i]);
+                int3 chunkPos = chunkDim * WorldPositionToCoordinate(worldPosition - LookupTables.CubeCorners[i]);
                 if (modifiedChunkPositions.Contains(chunkPos)) { continue; }
 
                 if (TryGetChunk(chunkPos, out Chunk chunk))
                 {
-                    int3 localPos = (worldPosition - chunkPos).Mod(ChunkSize + 1);
+                    int3 localPos = (worldPosition - chunkPos).Mod(chunkDim + 1);
                     chunk.SetDensity(density, localPos);
                     modifiedChunkPositions.Add(chunkPos);
                 }
@@ -104,7 +106,7 @@ namespace MarchingCubes
         /// <returns>The world position converted to a chunk coordinate</returns>
         public int3 WorldPositionToCoordinate(float3 worldPosition)
         {
-            return worldPosition.FloorToMultipleOfX(ChunkSize) / ChunkSize;
+            return worldPosition.FloorToMultipleOfX(chunkUnitSize) / ChunkDim;
         }
     }
 }

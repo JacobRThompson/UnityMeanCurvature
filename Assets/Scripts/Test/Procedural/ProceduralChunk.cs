@@ -1,22 +1,26 @@
-using Unity.Jobs;
+﻿using Unity.Jobs;
 using Unity.Mathematics;
 
-namespace MarchingCubes.EField
+namespace MarchingCubes.Examples
 {
-    /// <summary> A chunk of the e-field that generates procedurally </summary>
-    public class EFieldChunk : Chunk
+    /// <summary>
+    /// A chunk that generates procedurally
+    /// </summary>
+    public class ProceduralChunk : Chunk
     {
-        /// <summary> The EFieldWorld Object that owns this chunk </summary>
+        /// <summary>
+        /// The ProceduralWorld that owns this chunk
+        /// </summary>
         public ProceduralWorld World { get; set; }
 
         /// <summary>
-        /// Sets the coordinate of this chunk and starts generating the and the mesh. 
+        /// Sets the coordinate of this chunk and starts generating the and the mesh.
         /// </summary>
         /// <param name="coordinate">The new coordinate</param>
         public void SetCoordinate(int3 coordinate)
         {
             Coordinate = coordinate;
-            transform.position = coordinate.ToVectorInt() * ChunkSize;
+            transform.position = coordinate.ToVectorInt() * ChunkDim;
             name = $"Chunk_{coordinate.x.ToString()}_{coordinate.y.ToString()}_{coordinate.z.ToString()}";
             _densityModifications.Clear();
 
@@ -31,13 +35,13 @@ namespace MarchingCubes.EField
         {
             MarchingCubesJobHandle.Complete();
             
-            int3 worldPosition = Coordinate * ChunkSize;
+            int3 worldPosition = Coordinate * ChunkDim;
 
             var job = new ProceduralTerrainDensityCalculationJob
             {
                 Densities = Densities,
                 offset = worldPosition,
-                chunkSize = ChunkSize + 1, // +1 because ChunkSize is the amount of "voxels", and that +1 is the amount of density points
+                chunkDim = ChunkDim + 1, // +1 because ChunkSize is the amount of "voxels", and that +1 is the amount of density points
                 proceduralTerrainSettings = World.ProceduralTerrainSettings
             };
             

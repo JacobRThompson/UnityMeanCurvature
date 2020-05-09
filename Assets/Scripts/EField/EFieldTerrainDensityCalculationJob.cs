@@ -3,6 +3,7 @@ using Unity.Burst;
 using Unity.Collections;
 using Unity.Mathematics;
 
+/*
 namespace MarchingCubes.EField
 {
     /// <summary> An EField terrain density calculation job </summary>
@@ -75,3 +76,4 @@ namespace MarchingCubes.EField
         }
     }
 }
+*/

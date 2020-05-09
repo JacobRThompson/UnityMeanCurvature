@@ -1,22 +1,21 @@
-# Marching-Cubes-Terrain
-This is my implementation of the Marching Cubes algorithm using Unity.
 
-Demo video: https://www.youtube.com/watch?v=Tge_kwjj2So
+ # A Regime for Approximating Iso-Potential Surfaces By Examining the Mean Curvature of Meshes Generated Using the Marching-Cubes Algorithm
 
-## Features
-  - **Unity Job System with the Burst Compiler**
-  - Realtime terrain editing
-  - Smooth the terrain by holding the left ctrl key and left click
-  - Two world types:
-    - Procedurally-generated infinite world
-    - Import from black-and-white heightmap texture
+The Unity project used to write a paper of the same name for completion of a
+bachelor of mathematics.
 
-## System Requirements
-  - Unity3D (I'm developing this project with version **2019.2.2f1**, but any newer version should also work)
+The paper can be found [here](https://www.example.com/)
 
-## Setup
-  1. Clone the repository with `git clone https://github.com/Eldemarkki/Marching-Cubes-Terrain.git`
-  2. Open the project with Unity
- 
+A demonstration of this system can be found [here(MP4)](https://www.example.com/) and [here(YouTube)](https://www.example.com/)
+
+## Video Explanation/Guide:
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=YOUTUBE_VIDEO_ID_HERE
+" target="_blank"><img src="http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg" 
+alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
+
 ## Credits:
-- Paul Bourke for an example implementation of the Marching Cubes algorithm (http://paulbourke.net/geometry/polygonise/)
+- Paul Bourke for an example implementation of the Marching Cubes algorithm
+  (http://paulbourke.net/geometry/polygonise/)
+- User Eldemarkki for creating a unity implementation of Marching Cubes that
+  generated the used meshes (https://github.com/Eldemarkki/Marching-Cubes-Terrain)

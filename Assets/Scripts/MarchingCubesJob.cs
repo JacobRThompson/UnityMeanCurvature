@@ -25,10 +25,10 @@ namespace MarchingCubes
         [ReadOnly] public float isolevel;
         
         /// <summary>
-        /// The chunk's size. This represents the width, height and depth in Unity units.
+        /// The chunk's size. This represents the width, height and depth in chunk units.
         /// </summary>
-        [ReadOnly] public int chunkSize;
-        
+        [ReadOnly] public int chunkDim;
+        [ReadOnly] public int chunkUnitSize;
         /// <summary>
         /// The counter to keep track of the triangle index
         /// </summary>
@@ -52,9 +52,9 @@ namespace MarchingCubes
         {
             // Voxel's position inside the chunk. Goes from (0, 0, 0) to (chunkSize-1, chunkSize-1, chunkSize-1)
             int3 voxelLocalPosition = new int3(
-                index / (chunkSize * chunkSize),
-                index / chunkSize % chunkSize,
-                index % chunkSize);
+                index / (chunkDim * chunkDim),
+                index / chunkDim % chunkDim,
+                index % chunkDim);
             
             VoxelCorners<float> densities = GetDensities(voxelLocalPosition);
 
@@ -64,7 +64,7 @@ namespace MarchingCubes
                 return;
             }
 
-            VoxelCorners<int3> corners = GetCorners(voxelLocalPosition);
+            VoxelCorners<float3> corners = GetCorners(voxelLocalPosition);
 
             int edgeIndex = LookupTables.EdgeTable[cubeIndex];
 
@@ -100,7 +100,7 @@ namespace MarchingCubes
             for (int i = 0; i < 8; i++)
             {
                 int3 voxelCorner = localPosition + LookupTables.CubeCorners[i];
-                int densityIndex = voxelCorner.x * (chunkSize + 1) * (chunkSize + 1) + voxelCorner.y * (chunkSize + 1) + voxelCorner.z;
+                int densityIndex = voxelCorner.x * (chunkDim + 1) * (chunkDim + 1) + voxelCorner.y * (chunkDim + 1) + voxelCorner.z;
                 densities[i] = this.densities[densityIndex];
             }
 
@@ -113,9 +113,9 @@ namespace MarchingCubes
         /// <param name="position">The voxel's position</param>
         /// <returns>The voxel's corners</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private VoxelCorners<int3> GetCorners(int3 position)
+        private VoxelCorners<float3> GetCorners(float3 position)
         {
-            VoxelCorners<int3> corners = new VoxelCorners<int3>();
+            VoxelCorners<float3> corners = new VoxelCorners<float3>();
             for (int i = 0; i < 8; i++)
             {
                 corners[i] = position + LookupTables.CubeCorners[i];
@@ -150,7 +150,7 @@ namespace MarchingCubes
         /// and densities above this will be outside the surface (air)</param>
         /// <returns>The generated vertex list for the voxel</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private VertexList GenerateVertexList(VoxelCorners<float> voxelDensities, VoxelCorners<int3> voxelCorners,
+        private VertexList GenerateVertexList(VoxelCorners<float> voxelDensities, VoxelCorners<float3> voxelCorners,
             int edgeIndex, float isolevel)
         {
             var vertexList = new VertexList();
@@ -162,8 +162,8 @@ namespace MarchingCubes
                 int edgeStartIndex = LookupTables.EdgeIndexTable[2*i+0];
                 int edgeEndIndex = LookupTables.EdgeIndexTable[2*i+1];
 
-                int3 corner1 = voxelCorners[edgeStartIndex];
-                int3 corner2 = voxelCorners[edgeEndIndex];
+                float3 corner1 = voxelCorners[edgeStartIndex];
+                float3 corner2 = voxelCorners[edgeEndIndex];
 
                 float density1 = voxelDensities[edgeStartIndex];
                 float density2 = voxelDensities[edgeEndIndex];

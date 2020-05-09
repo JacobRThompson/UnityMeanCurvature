@@ -22,9 +22,11 @@ namespace MarchingCubes.Examples
         [ReadOnly] public int3 offset;
         
         /// <summary>
-        /// The chunk size
+        /// The chunk size in chunk units
         /// </summary>
-        [ReadOnly] public int chunkSize;
+        [ReadOnly] public int chunkDim;
+
+        [ReadOnly] public float chunkUnitSize;
 
         /// <summary>
         /// The procedural terrain generation settings
@@ -42,9 +44,9 @@ namespace MarchingCubes.Examples
         /// <param name="index">The iteration index provided by Unity's Job System</param>
         public void Execute(int index)
         {
-            int worldPositionX = index / (chunkSize * chunkSize) + offset.x;
-            int worldPositionY = index / chunkSize % chunkSize + offset.y;
-            int worldPositionZ = index % chunkSize + offset.z;
+            int worldPositionX = index / (chunkDim * chunkDim) + offset.x;
+            int worldPositionY = index / chunkDim % chunkDim + offset.y;
+            int worldPositionZ = index % chunkDim + offset.z;
 
             float density = CalculateDensity(worldPositionX, worldPositionY, worldPositionZ);
             densities[index] = math.clamp(density, -1, 1);
@@ -58,8 +60,9 @@ namespace MarchingCubes.Examples
         /// <param name="worldPositionZ">Sampling point's world-space z position</param>
         /// <returns>The density sampled from the world-space position</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public float CalculateDensity(int worldPositionX, int worldPositionY, int worldPositionZ)
-        {
+        public float CalculateDensity(
+            int worldPositionX, int worldPositionY, int worldPositionZ
+        ){
             return worldPositionY - OctaveNoise(worldPositionX, worldPositionZ, proceduralTerrainSettings.NoiseFrequency * 0.001f, proceduralTerrainSettings.NoiseOctaveCount) * proceduralTerrainSettings.Amplitude - proceduralTerrainSettings.HeightOffset;
         }
 

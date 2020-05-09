@@ -71,9 +71,10 @@ namespace MarchingCubes
         public int3 Coordinate { get; set; }
 
         /// <summary>
-        /// The chunk's size. This represents the width, height and depth in Unity units.
+        /// The chunk's size. This represents the width, height and depth in Chunk units.
         /// </summary>
-        public int ChunkSize { get; private set; }
+        public int ChunkDim { get; private set; }
+        public float ChunkUnitSize{get; private set; }
 
         /// <summary>
         /// The chunk's density field
@@ -134,21 +135,28 @@ namespace MarchingCubes
         /// <summary>
         /// Initializes the chunk and starts generating the mesh.
         /// </summary>
-        /// <param name="chunkSize">The chunk's size. This represents the width, height and depth in Unity units.</param>
+        /// <param name="ChunkDim">The chunk's size. This represents the width, height and depth in Unity units.</param>
         /// <param name="isolevel">The density level where a surface will be created. Densities below this will be inside the surface (solid), and densities above this will be outside the surface (air)</param>
         /// <param name="coordinate">The chunk's coordinate</param>
-        public void Initialize(int chunkSize, float isolevel, int3 coordinate)
-        {
+        public void Initialize(
+            int chunkDim, float chunkUnitSize, float isolevel, int3 coordinate
+        ){
             _isolevel = isolevel;
             Coordinate = coordinate;
-            ChunkSize = chunkSize;
-            
-            transform.position = coordinate.ToVectorInt() * ChunkSize;
+            ChunkDim = chunkDim;
+            ChunkUnitSize =  chunkUnitSize;
+            transform.position = coordinate.ToVectorFloat() * ChunkUnitSize;
             name = $"Chunk_{coordinate.x}_{coordinate.y}_{coordinate.z}";
 
-            Densities = new NativeArray<float>((ChunkSize + 1) * (ChunkSize + 1) * (ChunkSize + 1), Allocator.Persistent);
-            _outputVertices = new NativeArray<Vector3>(15 * ChunkSize * ChunkSize * ChunkSize, Allocator.Persistent);
-            _outputTriangles = new NativeArray<int>(15 * ChunkSize * ChunkSize * ChunkSize, Allocator.Persistent);
+            Densities = new NativeArray<float>(
+                (ChunkDim + 1) * (ChunkDim + 1) * (ChunkDim + 1), Allocator.Persistent
+            );
+            _outputVertices = new NativeArray<Vector3>(
+                15 * ChunkDim * ChunkDim * ChunkDim, Allocator.Persistent
+            );
+            _outputTriangles = new NativeArray<int>(
+                15 * ChunkDim * ChunkDim * ChunkDim, Allocator.Persistent
+            );
 
             StartDensityCalculation();
             StartMeshGeneration();
@@ -178,14 +186,14 @@ namespace MarchingCubes
             {
                 densities = _densities,
                 isolevel = _isolevel,
-                chunkSize = ChunkSize,
+                chunkDim = ChunkDim,
                 counter = _counter,
 
                 vertices = _outputVertices,
                 triangles = _outputTriangles
             };
 
-            MarchingCubesJobHandle = marchingCubesJob.Schedule(ChunkSize * ChunkSize * ChunkSize, 128, DensityJobHandle);
+            MarchingCubesJobHandle = marchingCubesJob.Schedule(ChunkDim * ChunkDim * ChunkDim, 128, DensityJobHandle);
 
             _creatingMesh = true;
         }
@@ -222,13 +230,13 @@ namespace MarchingCubes
         /// <summary>
         /// Gets the density at a local-space position
         /// </summary>
-        /// <param name="x">The density's x position inside the chunk (valid values: 0 to chunkSize+1)</param>
-        /// <param name="y">The density's y position inside the chunk (valid values: 0 to chunkSize+1)</param>
-        /// <param name="z">The density's z position inside the chunk (valid values: 0 to chunkSize+1)</param>
+        /// <param name="x">The density's x position inside the chunk (valid values: 0 to ChunkDim+1)</param>
+        /// <param name="y">The density's y position inside the chunk (valid values: 0 to ChunkDim+1)</param>
+        /// <param name="z">The density's z position inside the chunk (valid values: 0 to ChunkDim+1)</param>
         /// <returns>The density at that local-space position</returns>
         public float GetDensity(int x, int y, int z)
         {
-            return Densities[x * (ChunkSize + 1) * (ChunkSize + 1) + y * (ChunkSize + 1) + z];
+            return Densities[x * (ChunkDim + 1) * (ChunkDim + 1) + y * (ChunkDim + 1) + z];
         }
 
         /// <summary>
@@ -245,12 +253,12 @@ namespace MarchingCubes
         /// Sets the density at a local-space position
         /// </summary>
         /// <param name="density">The new density value</param>
-        /// <param name="x">The density's x position inside the chunk (valid values: 0 to chunkSize+1)</param>
-        /// <param name="y">The density's y position inside the chunk (valid values: 0 to chunkSize+1)</param>
-        /// <param name="z">The density's z position inside the chunk (valid values: 0 to chunkSize+1)</param>
+        /// <param name="x">The density's x position inside the chunk (valid values: 0 to ChunkDim+1)</param>
+        /// <param name="y">The density's y position inside the chunk (valid values: 0 to ChunkDim+1)</param>
+        /// <param name="z">The density's z position inside the chunk (valid values: 0 to ChunkDim+1)</param>
         public void SetDensity(float density, int x, int y, int z)
         {
-            _densityModifications.Add((x * (ChunkSize + 1) * (ChunkSize + 1) + y * (ChunkSize + 1) + z, density));
+            _densityModifications.Add((x * (ChunkDim + 1) * (ChunkDim + 1) + y * (ChunkDim + 1) + z, density));
         }
 
         /// <summary>

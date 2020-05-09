@@ -18,7 +18,7 @@ namespace MarchingCubes
         /// <param name="x">The multiple to floor to</param>
         /// <returns>The floored value</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int3 FloorToMultipleOfX(this float3 n, int x)
+        public static int3 FloorToMultipleOfX(this float3 n, float x)
         {
             return (int3)(math.floor(n / x) * x);
         }
@@ -35,7 +35,24 @@ namespace MarchingCubes
         }
 
         /// <summary>
-        /// Calculates the remainder of a division operation for int3. Ensures that the returned value is positive
+        /// Converts an float3 value to Vector3Int
+        /// </summary>
+        /// <param name="n">The float3 value to convert</param>
+        /// <returns>The converted value</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 ToVectorFloat(this float3 n)
+        {
+            return new Vector3(n.x, n.y, n.z);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 ToVectorFloat(this int3 n)
+        {
+            return new Vector3(n.x, n.y, n.z);
+        }
+
+        /// <summary>
+        /// Calculates the remainder of a division operation for float3. Ensures that the returned value is positive
         /// </summary>
         /// <param name="n">The divident</param>
         /// <param name="x">The divisor</param>
@@ -45,7 +62,11 @@ namespace MarchingCubes
         {
             return (n % x + x) % x;
         }
-        
+        public static float3 Mod(this float3 n, float x)
+        {
+            return (n % x + x) % x;
+        }
+
         // Taken and modified to use NativeSlices from here: https://forum.unity.com/threads/allow-setting-mesh-arrays-with-nativearrays.536736/
         /// <summary>
         /// Directly copies the memory for faster copying of arrays

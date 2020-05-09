@@ -1,54 +1,42 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
+using Unity.Mathematics;
 
-namespace MarchingCubes.Examples
+/*
+namespace MarchingCubes.EField
 {
     /// <summary>
     /// A procedurally generated world
     /// </summary>
     public class ProceduralWorld : World
     {
-        /// <summary>
-        /// The procedural terrain generation settings
-        /// </summary>
-        [SerializeField] private ProceduralTerrainSettings proceduralTerrainSettings = new ProceduralTerrainSettings(1, 16, 50, -40);
+        /// <summary> The procedural terrain generation settings </summary>
+        [SerializeField] private EFieldTerrainSettings _eFieldTerrainSettings = 
+            new EFieldTerrainSettings((float)9e-12, 0.5f, 100000f, new Vector3(12,3,12));
 
-        /// <summary>
-        /// The "radius" of the chunks the player sees
-        /// </summary>
-        [SerializeField] private int renderDistance = 3;
-
-        /// <summary>
-        /// The viewer which the terrain is generated around
-        /// </summary>
+        /// <summary> The viewer which the terrain is generated around </summary>
         [SerializeField] private Transform player;
 
-        /// <summary>
-        /// The point where terrain was last generated around
-        /// </summary>
+        /// <summary> The point where terrain was last generated around </summary>
         private Vector3 _startPos;
 
-        /// <summary>
-        /// The pooled chunks that can be moved to a new position
-        /// </summary>
-        private Queue<ProceduralChunk> _availableChunks;
+        /// <summary> The pooled chunks that can be moved to a new position </summary>
+        private Queue<EFieldChunk> _availableChunks;
 
-        /// <summary>
-        /// The procedural terrain generation settings
-        /// </summary>
-        public ProceduralTerrainSettings ProceduralTerrainSettings => proceduralTerrainSettings;
+        public EFieldTerrainSettings EFieldTerrainSettings => _eFieldTerrainSettings;
 
         private void Awake()
         {
-            _availableChunks = new Queue<ProceduralChunk>();
+            _availableChunks = new Queue<EFieldChunk>();
         }
 
+        private int renderDistance = 4;
         protected override void Start()
         {
             base.Start();
-            GenerateNewTerrain(player.position);
+            GenerateNewTerrain();
         }
 
         private void Update()
@@ -61,9 +49,7 @@ namespace MarchingCubes.Examples
             }
         }
 
-        /// <summary>
-        /// Generates new procedural terrain
-        /// </summary>
+        /// <summary> Generates new procedural terrain </summary>
         /// <param name="playerPos">The position to generate the terrain around</param>
         private void GenerateNewTerrain(Vector3 playerPos)
         {
@@ -79,8 +65,8 @@ namespace MarchingCubes.Examples
 
                 if (xOffset > renderDistance || yOffset > renderDistance || zOffset > renderDistance)
                 {
-                    // This conversion always succeeds because we are always adding only ProceduralChunks to Chunks.
-                    _availableChunks.Enqueue(chunk as ProceduralChunk);
+                    // This conversion always succeeds because we are always adding only EFieldChunks to Chunks.
+                    _availableChunks.Enqueue(chunk as EFieldChunk);
                     Chunks.Remove(chunk.Coordinate);
                 }
             }
@@ -122,9 +108,9 @@ namespace MarchingCubes.Examples
 
             if (_availableChunks.Count > 0)
             {
-                ProceduralChunk proceduralChunk = _availableChunks.Dequeue();
-                proceduralChunk.SetCoordinate(chunkCoordinate);
-                chunk = proceduralChunk;
+                EFieldChunk EFieldChunk = _availableChunks.Dequeue();
+                EFieldChunk.SetCoordinate(chunkCoordinate);
+                chunk = EFieldChunk;
                 return false;
             }
 
@@ -137,9 +123,9 @@ namespace MarchingCubes.Examples
         /// </summary>
         /// <param name="chunkCoordinate">The chunk's coordinate</param>
         /// <returns>The created chunk</returns>
-        private ProceduralChunk CreateChunk(int3 chunkCoordinate)
+        private EFieldChunk CreateChunk(int3 chunkCoordinate)
         {
-            ProceduralChunk chunk = Instantiate(ChunkPrefab, (chunkCoordinate * ChunkSize).ToVectorInt(), Quaternion.identity).GetComponent<ProceduralChunk>();
+            EFieldChunk chunk = Instantiate(ChunkPrefab, (chunkCoordinate * ChunkSize).ToVectorInt(), Quaternion.identity).GetComponent<EFieldChunk>();
             chunk.World = this;
             chunk.Initialize(ChunkSize, Isolevel, chunkCoordinate);
 
@@ -147,3 +133,4 @@ namespace MarchingCubes.Examples
         }
     }
 }
+*/

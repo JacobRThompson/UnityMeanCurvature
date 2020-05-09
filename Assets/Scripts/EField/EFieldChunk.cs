@@ -1,20 +1,17 @@
-﻿using Unity.Jobs;
+using Unity.Jobs;
 using Unity.Mathematics;
 
-namespace MarchingCubes.Examples
+/*
+namespace MarchingCubes.EField
 {
-    /// <summary>
-    /// A chunk that generates procedurally
-    /// </summary>
-    public class ProceduralChunk : Chunk
+    /// <summary> A chunk of the e-field that generates procedurally </summary>
+    public class EFieldChunk : Chunk
     {
-        /// <summary>
-        /// The ProceduralWorld that owns this chunk
-        /// </summary>
+        /// <summary> The EFieldWorld Object that owns this chunk </summary>
         public ProceduralWorld World { get; set; }
 
         /// <summary>
-        /// Sets the coordinate of this chunk and starts generating the and the mesh.
+        /// Sets the coordinate of this chunk and starts generating the and the mesh. 
         /// </summary>
         /// <param name="coordinate">The new coordinate</param>
         public void SetCoordinate(int3 coordinate)
@@ -49,3 +46,4 @@ namespace MarchingCubes.Examples
         }
     }
 }
+*/
