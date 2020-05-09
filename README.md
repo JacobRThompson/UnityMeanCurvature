@@ -1,5 +1,5 @@
 
- ## A Regime for Approximating IsoPotential Surfaces By Examining the Mean Curvature of Meshes Generated Using the Marching-Cubes Algorithm
+ ## A Regime for Approximating Isopotential Surfaces By Examining the Mean Curvature of Meshes Generated Using the Marching-Cubes Algorithm
 
 The Unity project used to write a paper of the same name for completion of a
 bachelor of mathematics. The paper can be found
@@ -17,4 +17,6 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 - Paul Bourke for an example implementation of the Marching Cubes algorithm
   (http://paulbourke.net/geometry/polygonise/)
 - User Eldemarkki for creating a unity implementation of Marching Cubes that
-  generated the used meshes (https://github.com/Eldemarkki/Marching-Cubes-Terrain)
+  generated the used meshes
+  (https://github.com/Eldemarkki/Marching-Cubes-Terrain)
+
