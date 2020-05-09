@@ -2,11 +2,10 @@
  ## A Regime for Approximating IsoPotential Surfaces By Examining the Mean Curvature of Meshes Generated Using the Marching-Cubes Algorithm
 
 The Unity project used to write a paper of the same name for completion of a
-bachelor of mathematics.
-
-The paper can be found [here](https://www.example.com/)
-
-A demonstration of this system can be found [here(MP4)](https://www.example.com/) and [here(YouTube)](https://www.example.com/)
+bachelor of mathematics. The paper can be found
+[here](https://www.example.com/), while a commentary-free demonstration can be
+found found [here(MP4)](https://www.example.com/) and
+[here(YouTube)](https://www.example.com/).
 
 ### Video Explanation/Guide:
 
