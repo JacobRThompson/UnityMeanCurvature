@@ -1,10 +1,10 @@
 
- # Representing Mean Curvature Using Unity Shaders
+ # Mean Curvature Using Unity Shaders
 
 The Unity project used to write a paper of the same name for completion of a
 bachelor of mathematics. The paper can be found
 [here](https://www.example.com/), while a commentary-free demonstration can be
-found found [here(MP4)](https://www.example.com/) and
+found found [here(MP4)](https://github.com/JacobRThompson/MeanCurvatureShader/raw/master/Recordings/Animation.mp4) and
 [here(YouTube)](https://www.example.com/).
 
 ## Video Explanation/Guide:
