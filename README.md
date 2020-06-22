@@ -7,16 +7,16 @@ My senior seminar project to fulfill the requirements for my bachelor of mathema
 
 <div align="center">
     <img src="https://github.com/JacobRThompson/Unity-MeanCurvatureShader/blob/master/Misc/DemoImage.png?raw=true" 
-    alt="Demonstration Image" width="66%" />
-</div>
-<div  align="center" style="margin-left: 10%; margin-right: 10%; font-weight: lighter; font-size: smaller">
-    Sample output. Max curvature mapped to (255,255,255); min curvature mapped to (0,0,0). e = 3.5.
+    alt="Demonstration Image" width="50%" />
 </div>
 
-## Description:
+##### <div  align="center" style="margin-left: 10%; margin-right: 10%"> Sample output. Max curvature mapped to (255,255,255); min curvature mapped to (0,0,0). e = 3.5.
+</div>
 
-## Use:
+### Description:
 
-## Included Scenes:
+### Use:
+
+### Included Scenes:
 
 
