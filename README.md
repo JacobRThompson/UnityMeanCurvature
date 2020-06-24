@@ -47,8 +47,9 @@ a modified sigmoid curve:
 
 where k is the value of `Exponent Base` within the shader. Higher values result in
 positive and negative curvatures getting mapped closer to `MaxColor` and
-`MinColor` respectively. When `ApplyHighlight` is enabled, curvatures equal to
-or approaching `HighlightValue` (before sigmoid) are mapped to
+`MinColor` respectively. When `ApplyHighlight` is enabled, curvatures (before
+sigmoid is applied) equal to
+or approaching `HighlightValue` are mapped to
 `HighlightColor`.
 
 ## Limitations:
