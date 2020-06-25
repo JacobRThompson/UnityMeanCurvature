@@ -13,7 +13,7 @@ A senior seminar project used to fulfill the requirements for a bachelor of
 mathematics degree. The accompanying paper can be found
 [here](https://github.com/JacobRThompson/Unity-MeanCurvatureShader/blob/master/Misc/SeminarPaper.pdf),
 while a video demonstration can be downloaded
-[here](https://github.com/JacobRThompson/Unity-MeanCurvatureShader/blob/master/Misc/DemoAnimation.mp4?raw=true).
+[here.](https://github.com/JacobRThompson/Unity-MeanCurvatureShader/blob/master/Misc/DemoAnimation.mp4?raw=true)
 
 ## Description:
 
