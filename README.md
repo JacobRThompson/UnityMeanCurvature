@@ -24,6 +24,10 @@ prefabs out of the box. Target game objects do require valid `Mesh.normals`
 data, however. When working with procedurally-generated or broken meshes, the
 use of `Mesh.RecalculateNormals()` is recommended.
 
+<div align="center">
+    <img src="Misc/demo1.gif" width="50%" />
+</div>
+
 ## Use:
 
 Place [Mean Curvature.shadergraph](https://github.com/JacobRThompson/Unity-MeanCurvatureShader/blob/master/Assets/Shaders/Mean%20Curvature.shadergraph)
